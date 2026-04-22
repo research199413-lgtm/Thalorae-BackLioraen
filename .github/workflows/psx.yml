@@ -1,0 +1,83 @@
+name: Auto Loop
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Important: allows pushing changes back
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for proper commits
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: 'pip'  # Cache pip dependencies
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: Debug - List files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo -e "\nFiles in repository:"
+          ls -la
+          echo -e "\nPython version:"
+          python --version
+          echo -e "\nInstalled packages:"
+          pip list
+
+      - name: Run Auto Loop
+        run: python Loop.py
+        continue-on-error: false  # Stop if Loop.py fails
+
+      - name: Check for data changes
+        id: check_changes
+        run: |
+          if [[ -n $(git status --porcelain data/) ]]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "Data files were modified"
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "No data changes detected"
+          fi
+
+      - name: Commit and Push Data
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git add data/
+          git add logs/
+          git commit -m "Auto-update: Market data $(date +'%Y-%m-%d %H:%M:%S UTC')" || echo "No changes to commit"
+          git push || echo "Push failed"
+
+      - name: Upload Logs as Artifact
+        if: always()  # Upload logs even if previous steps fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: psx-logs-${{ github.run_number }}
+          path: logs/
+          retention-days: 30
+
+      - name: Upload Data as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: psx-data-${{ github.run_number }}
+          path: data/
+          retention-days: 90
