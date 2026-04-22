@@ -10,11 +10,11 @@ interval = 300  # seconds
 def run_collector():
     """Run the PSX collector script and handle errors."""
     try:
-        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting psx_collector.py...")
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Starting Zephyrris.py...")
         
         # Use sys.executable to ensure correct Python interpreter
         result = subprocess.run(
-            [sys.executable, "psx_collector.py"],
+            [sys.executable, "Zephyrris.py"],
             capture_output=True,
             text=True,
             timeout=300  # 5-minute timeout to prevent hanging
