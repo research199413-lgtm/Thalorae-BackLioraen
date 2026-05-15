@@ -1,8 +1,11 @@
 name: Auto Loop
 
 on:
-  workflow_dispatch:
-
+  workflow_dispatch:  # Keep manual trigger
+  schedule:
+    - cron: '0 4 * * *'    # 9:00 AM PKT (4:00 AM UTC)
+    - cron: '30 7 * * *'   # 12:30 PM PKT (7:30 AM UTC)
+    - cron: '13 14 * * *'  # 7:13 PM PKT (2:13 PM UTC)
 jobs:
   run:
     runs-on: ubuntu-latest
