@@ -1,28 +1,30 @@
 name: Auto Loop
 
 on:
-  workflow_dispatch:  # Keep manual trigger
+  workflow_dispatch:
   schedule:
-      - cron: '0 0 * * *'    # 5:00 AM PKT
-      - cron: '0 4 * * *'    # 9:00 AM PKT
-      - cron: '30 7 * * *'   # 12:30 PM PKTjobs:
+    - cron: '0 0 * * *'      # 5:00 AM PKT
+    - cron: '0 4 * * *'      # 9:00 AM PKT
+    - cron: '30 7 * * *'     # 12:30 PM PKT
+
+jobs:
   run:
     runs-on: ubuntu-latest
-    
+
     permissions:
-      contents: write  # Important: allows pushing changes back
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for proper commits
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: 'pip'  # Cache pip dependencies
+          cache: pip
 
       - name: Install dependencies
         run: |
@@ -38,26 +40,26 @@ on:
         run: |
           echo "Current directory:"
           pwd
-          echo -e "\nFiles in repository:"
+          echo ""
+          echo "Files in repository:"
           ls -la
-          echo -e "\nPython version:"
+          echo ""
+          echo "Python version:"
           python --version
-          echo -e "\nInstalled packages:"
+          echo ""
+          echo "Installed packages:"
           pip list
 
       - name: Run Auto Loop
         run: python Loop.py
-        continue-on-error: false  # Stop if Loop.py fails
 
       - name: Check for data changes
         id: check_changes
         run: |
           if [[ -n $(git status --porcelain data/) ]]; then
             echo "changes=true" >> $GITHUB_OUTPUT
-            echo "Data files were modified"
           else
             echo "changes=false" >> $GITHUB_OUTPUT
-            echo "No data changes detected"
           fi
 
       - name: Commit and Push Data
@@ -69,7 +71,7 @@ on:
           git push || echo "Push failed"
 
       - name: Upload Logs as Artifact
-        if: always()  # Upload logs even if previous steps fail
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: psx-logs-${{ github.run_number }}
