@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'      # 5:00 AM PKT
-    - cron: '0 3 * * *'      # 9:00 AM PKT
+    - cron: '0 3 * * *'      # 8:00 AM PKT
     - cron: '30 7 * * *'     # 12:30 PM PKT
 
 jobs:
