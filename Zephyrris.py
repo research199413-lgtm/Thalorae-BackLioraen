@@ -39,7 +39,6 @@ class Config:
         "CURRENT", "CHANGE", "CHANGE (%)", "VOLUME"
     ]
     
-    REMOVE_SYMBOLS = {"XT", "XD", "XR", "XS"}
 
 # ==================== LOGGING SETUP ====================
 class LoggerSetup:
