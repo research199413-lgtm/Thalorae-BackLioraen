@@ -38,7 +38,7 @@ class Config:
         "LDCP", "OPEN", "HIGH", "LOW",
         "CURRENT", "CHANGE", "CHANGE (%)", "VOLUME"
     ]
-       REMOVE_SYMBOLS = {"XT", "XD", "XR", "XS"}
+REMOVE_SYMBOLS = {"XT", "XD", "XR", "XS"}
 
 # ==================== LOGGING SETUP ====================
 class LoggerSetup:
