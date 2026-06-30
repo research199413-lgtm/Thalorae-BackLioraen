@@ -11,6 +11,7 @@ import logging
 from pathlib import Path
 from typing import Optional
 import json
+import argparse
 
 # ==================== CONFIGURATION ====================
 class Config:
@@ -27,6 +28,7 @@ class Config:
     REQUEST_TIMEOUT = 30
     MAX_RETRIES = 3
     RETRY_DELAY = 5
+    SESSION_DELAY = 1  # Delay between session establishment and data request
     
     # Data columns
     EXPECTED_COLUMNS = [
@@ -38,19 +40,53 @@ class Config:
         "LDCP", "OPEN", "HIGH", "LOW",
         "CURRENT", "CHANGE", "CHANGE (%)", "VOLUME"
     ]
-REMOVE_SYMBOLS = {"XT", "XD", "XR", "XS"}
+    
+    # Symbols to exclude (FIXED: Moved from module level)
+    REMOVE_SYMBOLS = {"XT", "XD", "XR", "XS"}
+    
+    # File settings
+    MAX_BACKUP_FILES = 5  # Keep last N backup files
+
+# ==================== DEPENDENCY CHECKER ====================
+class DependencyChecker:
+    """Check if required packages are installed."""
+    
+    REQUIRED_PACKAGES = {
+        'requests': 'requests',
+        'pandas': 'pandas',
+        'pytz': 'pytz',
+        'openpyxl': 'openpyxl'
+    }
+    
+    @classmethod
+    def check_dependencies(cls) -> tuple[bool, list[str]]:
+        """
+        Check if all required packages are available.
+        
+        Returns:
+            Tuple of (all_available, missing_packages)
+        """
+        missing = []
+        for package_name, import_name in cls.REQUIRED_PACKAGES.items():
+            try:
+                __import__(import_name)
+            except ImportError:
+                missing.append(package_name)
+        
+        return (len(missing) == 0, missing)
 
 # ==================== LOGGING SETUP ====================
 class LoggerSetup:
     """Setup logging configuration with file and console handlers."""
     
     @staticmethod
-    def setup_logger(name: str = "MarketDataScraper") -> logging.Logger:
+    def setup_logger(name: str = "MarketDataScraper", verbose: bool = False) -> logging.Logger:
         """
         Configure and return a logger with both file and console handlers.
         
         Args:
             name: Logger name
+            verbose: If True, console shows DEBUG level
             
         Returns:
             Configured logger instance
@@ -84,7 +120,7 @@ class LoggerSetup:
         
         # Console handler
         console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.setLevel(logging.INFO)
+        console_handler.setLevel(logging.DEBUG if verbose else logging.INFO)
         console_handler.setFormatter(formatter)
         
         # Add handlers
@@ -106,8 +142,22 @@ class MarketDataFetcher:
             "Accept": "application/json, text/html",
             "X-Requested-With": "XMLHttpRequest",
             "Accept-Language": "en-US,en;q=0.9",
-            "Referer": "https://dps.psx.com.pk/"
+            "Referer": Config.MAIN_URL
         }
+    
+    def __enter__(self):
+        """Context manager entry."""
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit - close session."""
+        self.close()
+    
+    def close(self):
+        """Close the session properly."""
+        if self.session:
+            self.session.close()
+            self.logger.debug("Session closed")
     
     def fetch_data(self) -> Optional[requests.Response]:
         """
@@ -116,6 +166,8 @@ class MarketDataFetcher:
         Returns:
             Response object or None if failed
         """
+        import time
+        
         for attempt in range(1, Config.MAX_RETRIES + 1):
             try:
                 self.logger.info(f"Fetching data (Attempt {attempt}/{Config.MAX_RETRIES})...")
@@ -129,8 +181,7 @@ class MarketDataFetcher:
                 )
                 
                 # Small delay between requests
-                import time
-                time.sleep(1)
+                time.sleep(Config.SESSION_DELAY)
                 
                 # Actual data request
                 self.logger.debug(f"Requesting data from {Config.DATA_URL}")
@@ -163,7 +214,6 @@ class MarketDataFetcher:
                 break
             
             if attempt < Config.MAX_RETRIES:
-                import time
                 self.logger.info(f"⏳ Retrying in {Config.RETRY_DELAY} seconds...")
                 time.sleep(Config.RETRY_DELAY)
         
@@ -213,6 +263,7 @@ class DataProcessor:
                 raise ValueError(f"Insufficient columns: {len(data[0])}, expected at least 10")
             
             rows = []
+            skipped_rows = 0
             for idx, stock in enumerate(data):
                 try:
                     rows.append({
@@ -228,8 +279,12 @@ class DataProcessor:
                         "VOLUME": stock[9],
                     })
                 except (IndexError, KeyError) as e:
+                    skipped_rows += 1
                     self.logger.warning(f"Skipping row {idx} due to error: {e}")
                     continue
+            
+            if skipped_rows > 0:
+                self.logger.info(f"Skipped {skipped_rows} invalid rows")
             
             if not rows:
                 raise ValueError("No valid rows extracted from data")
@@ -295,18 +350,22 @@ class DataProcessor:
             df.drop(columns=["LISTED IN"], inplace=True)
             self.logger.debug("Removed 'LISTED IN' column")
         
-        # Remove specific symbols
+        # Remove specific symbols (FIXED: Using Config.REMOVE_SYMBOLS)
         initial_count = len(df)
         df = df[~df["SYMBOL"].isin(Config.REMOVE_SYMBOLS)]
         removed_count = initial_count - len(df)
         if removed_count > 0:
-            self.logger.debug(f"Removed {removed_count} unwanted symbols")
+            self.logger.debug(f"Removed {removed_count} unwanted symbols: {Config.REMOVE_SYMBOLS}")
         
         # Convert numeric columns
         for col in Config.NUMERIC_COLUMNS:
             if col in df.columns:
                 original_dtype = df[col].dtype
                 df[col] = pd.to_numeric(df[col], errors="coerce")
+                # Count NaN values introduced by conversion
+                nan_count = df[col].isna().sum()
+                if nan_count > 0:
+                    self.logger.warning(f"Column {col}: {nan_count} values could not be converted to numeric")
                 self.logger.debug(f"Converted {col} from {original_dtype} to numeric")
         
         # Add timestamp columns
@@ -338,9 +397,16 @@ class DataProcessor:
 class DataStorage:
     """Handle data persistence to Excel files."""
     
-    def __init__(self, logger: logging.Logger):
-        """Initialize storage with logger."""
+    def __init__(self, logger: logging.Logger, create_backup: bool = True):
+        """
+        Initialize storage with logger.
+        
+        Args:
+            logger: Logger instance
+            create_backup: Whether to create backup files
+        """
         self.logger = logger
+        self.create_backup = create_backup
     
     def get_file_path(self, timestamp: datetime) -> Path:
         """
@@ -365,6 +431,57 @@ class DataStorage:
         self.logger.debug(f"Generated file path: {file_path}")
         return file_path
     
+    def _create_backup(self, file_path: Path) -> None:
+        """
+        Create backup of existing file.
+        
+        Args:
+            file_path: File to backup
+        """
+        if not file_path.exists():
+            return
+        
+        try:
+            backup_dir = file_path.parent / "backups"
+            backup_dir.mkdir(exist_ok=True)
+            
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            backup_name = f"{file_path.stem}_backup_{timestamp}.xlsx"
+            backup_path = backup_dir / backup_name
+            
+            shutil.copy2(file_path, backup_path)
+            self.logger.debug(f"Backup created: {backup_path}")
+            
+            # Clean old backups
+            self._cleanup_old_backups(backup_dir, file_path.stem)
+            
+        except Exception as e:
+            self.logger.warning(f"Could not create backup: {e}")
+    
+    def _cleanup_old_backups(self, backup_dir: Path, file_stem: str) -> None:
+        """
+        Remove old backup files, keeping only the most recent ones.
+        
+        Args:
+            backup_dir: Directory containing backups
+            file_stem: Base name of the file
+        """
+        try:
+            # Get all backup files for this file
+            backups = sorted(
+                backup_dir.glob(f"{file_stem}_backup_*.xlsx"),
+                key=lambda p: p.stat().st_mtime,
+                reverse=True
+            )
+            
+            # Remove old backups
+            for old_backup in backups[Config.MAX_BACKUP_FILES:]:
+                old_backup.unlink()
+                self.logger.debug(f"Removed old backup: {old_backup.name}")
+                
+        except Exception as e:
+            self.logger.warning(f"Could not cleanup old backups: {e}")
+    
     def save_data(self, df: pd.DataFrame, file_path: Path) -> bool:
         """
         Save DataFrame to Excel with deduplication.
@@ -378,6 +495,10 @@ class DataStorage:
         """
         try:
             self.logger.info(f"Saving data to: {file_path}")
+            
+            # Create backup of existing file
+            if self.create_backup and file_path.exists():
+                self._create_backup(file_path)
             
             # Load and merge with existing data
             if file_path.exists():
@@ -424,14 +545,14 @@ class DataStorage:
             # Verify file
             if file_path.exists():
                 file_size = file_path.stat().st_size
-                self.logger.info(f"✅ Data saved successfully ({len(df)} total rows, {file_size} bytes)")
+                self.logger.info(f"✅ Data saved successfully ({len(df)} total rows, {file_size:,} bytes)")
                 return True
             else:
                 self.logger.error("❌ File verification failed - file does not exist")
                 return False
             
         except PermissionError:
-            self.logger.error(f"❌ Permission denied: {file_path} (file may be open)")
+            self.logger.error(f"❌ Permission denied: {file_path} (file may be open in another program)")
             return False
         except Exception as e:
             self.logger.error(f"❌ Save failed: {e}", exc_info=True)
@@ -450,12 +571,17 @@ class DataStorage:
 class MarketDataScraper:
     """Main orchestrator for market data scraping - single execution."""
     
-    def __init__(self):
-        """Initialize scraper with all components."""
-        self.logger = LoggerSetup.setup_logger()
-        self.fetcher = MarketDataFetcher(self.logger)
+    def __init__(self, verbose: bool = False, create_backup: bool = True):
+        """
+        Initialize scraper with all components.
+        
+        Args:
+            verbose: Enable verbose logging
+            create_backup: Create backup files before overwriting
+        """
+        self.logger = LoggerSetup.setup_logger(verbose=verbose)
         self.processor = DataProcessor(self.logger)
-        self.storage = DataStorage(self.logger)
+        self.storage = DataStorage(self.logger, create_backup=create_backup)
         self.timezone = pytz.timezone(Config.TIMEZONE)
     
     def run(self) -> bool:
@@ -475,64 +601,122 @@ class MarketDataScraper:
         self.logger.info(f"   - Timezone: {Config.TIMEZONE}")
         self.logger.info(f"   - Data directory: {Config.BASE_DIR}")
         self.logger.info(f"   - Log directory: {Config.LOG_DIR}")
+        self.logger.info(f"   - Excluded symbols: {Config.REMOVE_SYMBOLS}")
         self.logger.info("=" * 70)
         
-        try:
-            # Fetch data
-            response = self.fetcher.fetch_data()
-            if not response:
-                self.logger.error("❌ Execution failed: Unable to fetch data")
-                return False
-            
-            # Parse data (try JSON first, then HTML)
-            df = self.processor.parse_json(response)
-            if df is None:
-                self.logger.info("JSON parsing failed, trying HTML fallback...")
-                df = self.processor.parse_html(response)
-            
-            if df is None or df.empty:
-                self.logger.warning("⚠️ No data retrieved (market may be closed)")
-                return False
-            
-            # Clean data
-            df = self.processor.clean_data(df, timestamp)
-            
-            # Save data
-            file_path = self.storage.get_file_path(timestamp)
-            success = self.storage.save_data(df, file_path)
-            
-            if success:
-                self.logger.info("=" * 70)
-                self.logger.info(f"📊 EXECUTION SUMMARY:")
-                self.logger.info(f"   ✅ Status: SUCCESS")
-                self.logger.info(f"   - Rows processed: {len(df)}")
-                self.logger.info(f"   - Unique symbols: {df['SYMBOL'].nunique()}")
-                self.logger.info(f"   - Timestamp: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
-                self.logger.info(f"   - File: {file_path}")
-                self.logger.info("=" * 70)
+        # Use context manager for proper session cleanup
+        with MarketDataFetcher(self.logger) as fetcher:
+            try:
+                # Fetch data
+                response = fetcher.fetch_data()
+                if not response:
+                    self.logger.error("❌ Execution failed: Unable to fetch data")
+                    return False
                 
-                # Sample data
-                if len(df) > 0:
-                    self.logger.debug("Sample data (first row):")
-                    self.logger.debug(df.iloc[0].to_dict())
-            else:
-                self.logger.error("=" * 70)
-                self.logger.error(f"📊 EXECUTION SUMMARY:")
-                self.logger.error(f"   ❌ Status: FAILED")
-                self.logger.error(f"   - Could not save data to file")
-                self.logger.error("=" * 70)
-            
-            return success
-            
-        except KeyboardInterrupt:
-            self.logger.warning("\n⚠️ Script interrupted by user")
-            return False
-        except Exception as e:
-            self.logger.error(f"❌ Unexpected error during execution: {e}", exc_info=True)
-            return False
+                # Parse data (try JSON first, then HTML)
+                df = self.processor.parse_json(response)
+                if df is None:
+                    self.logger.info("JSON parsing failed, trying HTML fallback...")
+                    df = self.processor.parse_html(response)
+                
+                if df is None or df.empty:
+                    self.logger.warning("⚠️ No data retrieved (market may be closed)")
+                    return False
+                
+                # Clean data
+                df = self.processor.clean_data(df, timestamp)
+                
+                # Save data
+                file_path = self.storage.get_file_path(timestamp)
+                success = self.storage.save_data(df, file_path)
+                
+                if success:
+                    self.logger.info("=" * 70)
+                    self.logger.info(f"📊 EXECUTION SUMMARY:")
+                    self.logger.info(f"   ✅ Status: SUCCESS")
+                    self.logger.info(f"   - Rows processed: {len(df)}")
+                    self.logger.info(f"   - Unique symbols: {df['SYMBOL'].nunique()}")
+                    self.logger.info(f"   - Timestamp: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+                    self.logger.info(f"   - File: {file_path}")
+                    self.logger.info("=" * 70)
+                    
+                    # Sample data
+                    if len(df) > 0:
+                        self.logger.debug("Sample data (first row):")
+                        self.logger.debug(df.iloc[0].to_dict())
+                else:
+                    self.logger.error("=" * 70)
+                    self.logger.error(f"📊 EXECUTION SUMMARY:")
+                    self.logger.error(f"   ❌ Status: FAILED")
+                    self.logger.error(f"   - Could not save data to file")
+                    self.logger.error("=" * 70)
+                
+                return success
+                
+            except KeyboardInterrupt:
+                self.logger.warning("\n⚠️ Script interrupted by user")
+                return False
+            except Exception as e:
+                self.logger.error(f"❌ Unexpected error during execution: {e}", exc_info=True)
+                return False
 
 # ==================== ENTRY POINT ====================
+def parse_arguments():
+    """Parse command line arguments."""
+    parser = argparse.ArgumentParser(
+        description="PSX Market Data Scraper - Single Execution Mode",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python script.py                  # Normal execution
+  python script.py --verbose        # Verbose logging
+  python script.py --no-backup      # Don't create backup files
+  python script.py --check-deps     # Check dependencies only
+        """
+    )
+    
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Enable verbose (DEBUG level) logging'
+    )
+    
+    parser.add_argument(
+        '--no-backup',
+        action='store_true',
+        help='Disable backup file creation'
+    )
+    
+    parser.add_argument(
+        '--check-deps',
+        action='store_true',
+        help='Check dependencies and exit'
+    )
+    
+    return parser.parse_args()
+
 if __name__ == "__main__":
+    args = parse_arguments()
+    
+    # Check dependencies
+    deps_ok, missing = DependencyChecker.check_dependencies()
+    
+    if not deps_ok:
+        print("=" * 70)
+        print("❌ MISSING DEPENDENCIES")
+        print("=" * 70)
+        print("The following packages are required but not installed:")
+        for pkg in missing:
+            print(f"  - {pkg}")
+        print("\nInstall them using:")
+        print(f"  pip install {' '.join(missing)}")
+        print("=" * 70)
+        sys.exit(1)
+    
+    if args.check_deps:
+        print("✅ All dependencies are installed!")
+        sys.exit(0)
+    
     # Initial debug information
     print("=" * 70)
     print("PSX Market Data Collector - Single Execution Mode")
@@ -541,11 +725,16 @@ if __name__ == "__main__":
     print(f"Current Directory: {os.getcwd()}")
     print(f"Script Location: {os.path.abspath(__file__)}")
     print(f"Time: {datetime.now()}")
+    print(f"Verbose Mode: {'ON' if args.verbose else 'OFF'}")
+    print(f"Backup Creation: {'OFF' if args.no_backup else 'ON'}")
     print("=" * 70)
     print()
     
     try:
-        scraper = MarketDataScraper()
+        scraper = MarketDataScraper(
+            verbose=args.verbose,
+            create_backup=not args.no_backup
+        )
         success = scraper.run()
         
         if success:
