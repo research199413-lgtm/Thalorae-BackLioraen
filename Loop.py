@@ -4,8 +4,8 @@ import sys
 from datetime import datetime
 
 # Configuration
-num_loops = 60
-interval = 300  # seconds
+num_loops = 2
+interval = 10  # seconds
 
 def run_collector():
     """Run the PSX collector script and handle errors."""
