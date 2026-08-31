@@ -1,0 +1,1124 @@
+2026-08-31 19:00:32 | INFO     | run                  | ======================================================================
+2026-08-31 19:00:32 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:00:32 | INFO     | run                  | ======================================================================
+2026-08-31 19:00:32 | INFO     | run                  | Execution Time: 2026-09-01 00:00:32 PKT
+2026-08-31 19:00:32 | INFO     | run                  | Configuration:
+2026-08-31 19:00:32 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:00:32 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:00:32 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:00:32 | INFO     | run                  |    - Excluded symbols: {'XS', 'XR', 'XT', 'XD'}
+2026-08-31 19:00:32 | INFO     | run                  | ======================================================================
+2026-08-31 19:00:32 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:00:32 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:00:35 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:00:36 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:00:36 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:00:36 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:00:36 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:00:36 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:00:36 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:00:36 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:00:36 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:00:36 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:00:36 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:00:36 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:00:36 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:00:36 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:00:36 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:00:36 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:00:36 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:00:36 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:00:36 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:00:36 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:00:36 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:00:36 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpukjduja6.xlsx
+2026-08-31 19:00:36 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:00:36 | INFO     | save_data            | ✅ Data saved successfully (503 total rows, 43,019 bytes)
+2026-08-31 19:00:36 | INFO     | run                  | ======================================================================
+2026-08-31 19:00:36 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:00:36 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:00:36 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:00:36 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:00:36 | INFO     | run                  |    - Timestamp: 2026-09-01 00:00:32
+2026-08-31 19:00:36 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:00:36 | INFO     | run                  | ======================================================================
+2026-08-31 19:00:36 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:00:36 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 0, 'DATETIME': '2026-09-01 00:00'}
+2026-08-31 19:00:36 | DEBUG    | close                | Session closed
+2026-08-31 19:05:37 | INFO     | run                  | ======================================================================
+2026-08-31 19:05:37 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:05:37 | INFO     | run                  | ======================================================================
+2026-08-31 19:05:37 | INFO     | run                  | Execution Time: 2026-09-01 00:05:37 PKT
+2026-08-31 19:05:37 | INFO     | run                  | Configuration:
+2026-08-31 19:05:37 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:05:37 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:05:37 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:05:37 | INFO     | run                  |    - Excluded symbols: {'XR', 'XS', 'XT', 'XD'}
+2026-08-31 19:05:37 | INFO     | run                  | ======================================================================
+2026-08-31 19:05:37 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:05:37 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:05:40 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:05:41 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:05:41 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:05:41 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:05:41 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:05:41 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:05:41 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:05:41 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:05:41 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:05:41 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:05:41 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:05:41 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:05:41 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:05:41 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:05:41 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:05:41 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:05:41 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:05:41 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:05:41 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:05:41 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:05:41 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_190541.xlsx
+2026-08-31 19:05:41 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:05:41 | DEBUG    | save_data            | Loaded 503 existing rows
+2026-08-31 19:05:41 | DEBUG    | save_data            | Combined to 1006 rows
+2026-08-31 19:05:41 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:05:41 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpohwmolgl.xlsx
+2026-08-31 19:05:41 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:05:41 | INFO     | save_data            | ✅ Data saved successfully (1006 total rows, 81,047 bytes)
+2026-08-31 19:05:41 | INFO     | run                  | ======================================================================
+2026-08-31 19:05:41 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:05:41 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:05:41 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:05:41 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:05:41 | INFO     | run                  |    - Timestamp: 2026-09-01 00:05:37
+2026-08-31 19:05:41 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:05:41 | INFO     | run                  | ======================================================================
+2026-08-31 19:05:41 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:05:41 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 5, 'DATETIME': '2026-09-01 00:05'}
+2026-08-31 19:05:41 | DEBUG    | close                | Session closed
+2026-08-31 19:10:42 | INFO     | run                  | ======================================================================
+2026-08-31 19:10:42 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:10:42 | INFO     | run                  | ======================================================================
+2026-08-31 19:10:42 | INFO     | run                  | Execution Time: 2026-09-01 00:10:42 PKT
+2026-08-31 19:10:42 | INFO     | run                  | Configuration:
+2026-08-31 19:10:42 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:10:42 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:10:42 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:10:42 | INFO     | run                  |    - Excluded symbols: {'XR', 'XT', 'XD', 'XS'}
+2026-08-31 19:10:42 | INFO     | run                  | ======================================================================
+2026-08-31 19:10:42 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:10:42 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:10:44 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:10:46 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:10:46 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:10:46 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:10:46 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:10:46 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:10:46 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:10:46 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:10:46 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:10:46 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:10:46 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:10:46 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:10:46 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:10:46 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:10:46 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:10:46 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:10:46 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:10:46 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:10:46 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:10:46 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:10:46 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_191046.xlsx
+2026-08-31 19:10:46 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:10:46 | DEBUG    | save_data            | Loaded 1006 existing rows
+2026-08-31 19:10:46 | DEBUG    | save_data            | Combined to 1509 rows
+2026-08-31 19:10:46 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:10:46 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpbamu8e19.xlsx
+2026-08-31 19:10:46 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:10:46 | INFO     | save_data            | ✅ Data saved successfully (1509 total rows, 119,132 bytes)
+2026-08-31 19:10:46 | INFO     | run                  | ======================================================================
+2026-08-31 19:10:46 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:10:46 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:10:46 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:10:46 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:10:46 | INFO     | run                  |    - Timestamp: 2026-09-01 00:10:42
+2026-08-31 19:10:46 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:10:46 | INFO     | run                  | ======================================================================
+2026-08-31 19:10:46 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:10:46 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 10, 'DATETIME': '2026-09-01 00:10'}
+2026-08-31 19:10:46 | DEBUG    | close                | Session closed
+2026-08-31 19:15:47 | INFO     | run                  | ======================================================================
+2026-08-31 19:15:47 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:15:47 | INFO     | run                  | ======================================================================
+2026-08-31 19:15:47 | INFO     | run                  | Execution Time: 2026-09-01 00:15:47 PKT
+2026-08-31 19:15:47 | INFO     | run                  | Configuration:
+2026-08-31 19:15:47 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:15:47 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:15:47 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:15:47 | INFO     | run                  |    - Excluded symbols: {'XR', 'XD', 'XS', 'XT'}
+2026-08-31 19:15:47 | INFO     | run                  | ======================================================================
+2026-08-31 19:15:47 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:15:47 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:15:50 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:15:52 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:15:52 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:15:52 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:15:52 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:15:52 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:15:52 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:15:52 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:15:52 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:15:52 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:15:52 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:15:52 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:15:52 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:15:52 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:15:52 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:15:52 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:15:52 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:15:52 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:15:52 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:15:52 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:15:52 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_191552.xlsx
+2026-08-31 19:15:52 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:15:52 | DEBUG    | save_data            | Loaded 1509 existing rows
+2026-08-31 19:15:52 | DEBUG    | save_data            | Combined to 2012 rows
+2026-08-31 19:15:52 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:15:52 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmprggjqy4_.xlsx
+2026-08-31 19:15:52 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:15:52 | INFO     | save_data            | ✅ Data saved successfully (2012 total rows, 157,232 bytes)
+2026-08-31 19:15:52 | INFO     | run                  | ======================================================================
+2026-08-31 19:15:52 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:15:52 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:15:52 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:15:52 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:15:52 | INFO     | run                  |    - Timestamp: 2026-09-01 00:15:47
+2026-08-31 19:15:52 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:15:52 | INFO     | run                  | ======================================================================
+2026-08-31 19:15:52 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:15:52 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 15, 'DATETIME': '2026-09-01 00:15'}
+2026-08-31 19:15:52 | DEBUG    | close                | Session closed
+2026-08-31 19:20:53 | INFO     | run                  | ======================================================================
+2026-08-31 19:20:53 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:20:53 | INFO     | run                  | ======================================================================
+2026-08-31 19:20:53 | INFO     | run                  | Execution Time: 2026-09-01 00:20:53 PKT
+2026-08-31 19:20:53 | INFO     | run                  | Configuration:
+2026-08-31 19:20:53 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:20:53 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:20:53 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:20:53 | INFO     | run                  |    - Excluded symbols: {'XD', 'XT', 'XR', 'XS'}
+2026-08-31 19:20:53 | INFO     | run                  | ======================================================================
+2026-08-31 19:20:53 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:20:53 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:20:55 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:20:57 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:20:57 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:20:57 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:20:57 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:20:57 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:20:57 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:20:57 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:20:57 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:20:57 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:20:57 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:20:57 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:20:57 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:20:57 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:20:57 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:20:57 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:20:57 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:20:57 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:20:57 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:20:57 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:20:57 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_192057.xlsx
+2026-08-31 19:20:57 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:20:57 | DEBUG    | save_data            | Loaded 2012 existing rows
+2026-08-31 19:20:57 | DEBUG    | save_data            | Combined to 2515 rows
+2026-08-31 19:20:57 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:20:57 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpklv8b6or.xlsx
+2026-08-31 19:20:57 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:20:57 | INFO     | save_data            | ✅ Data saved successfully (2515 total rows, 195,338 bytes)
+2026-08-31 19:20:57 | INFO     | run                  | ======================================================================
+2026-08-31 19:20:57 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:20:57 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:20:57 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:20:57 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:20:57 | INFO     | run                  |    - Timestamp: 2026-09-01 00:20:53
+2026-08-31 19:20:57 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:20:57 | INFO     | run                  | ======================================================================
+2026-08-31 19:20:57 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:20:57 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 20, 'DATETIME': '2026-09-01 00:20'}
+2026-08-31 19:20:57 | DEBUG    | close                | Session closed
+2026-08-31 19:25:58 | INFO     | run                  | ======================================================================
+2026-08-31 19:25:58 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:25:58 | INFO     | run                  | ======================================================================
+2026-08-31 19:25:58 | INFO     | run                  | Execution Time: 2026-09-01 00:25:58 PKT
+2026-08-31 19:25:58 | INFO     | run                  | Configuration:
+2026-08-31 19:25:58 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:25:58 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:25:58 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:25:58 | INFO     | run                  |    - Excluded symbols: {'XR', 'XT', 'XS', 'XD'}
+2026-08-31 19:25:58 | INFO     | run                  | ======================================================================
+2026-08-31 19:25:58 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:25:58 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:26:02 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:26:04 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:26:04 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:26:04 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:26:04 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:26:04 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:26:04 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:26:04 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:26:04 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:26:04 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:26:04 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:26:04 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:26:04 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:26:04 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:26:04 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:26:04 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:26:04 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:26:04 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:26:04 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:26:04 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:26:04 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_192604.xlsx
+2026-08-31 19:26:04 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:26:04 | DEBUG    | save_data            | Loaded 2515 existing rows
+2026-08-31 19:26:04 | DEBUG    | save_data            | Combined to 3018 rows
+2026-08-31 19:26:04 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:26:04 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmppju7oux9.xlsx
+2026-08-31 19:26:04 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:26:04 | INFO     | save_data            | ✅ Data saved successfully (3018 total rows, 233,425 bytes)
+2026-08-31 19:26:04 | INFO     | run                  | ======================================================================
+2026-08-31 19:26:04 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:26:04 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:26:04 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:26:04 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:26:04 | INFO     | run                  |    - Timestamp: 2026-09-01 00:25:58
+2026-08-31 19:26:04 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:26:04 | INFO     | run                  | ======================================================================
+2026-08-31 19:26:04 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:26:04 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 25, 'DATETIME': '2026-09-01 00:25'}
+2026-08-31 19:26:04 | DEBUG    | close                | Session closed
+2026-08-31 19:31:05 | INFO     | run                  | ======================================================================
+2026-08-31 19:31:05 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:31:05 | INFO     | run                  | ======================================================================
+2026-08-31 19:31:05 | INFO     | run                  | Execution Time: 2026-09-01 00:31:05 PKT
+2026-08-31 19:31:05 | INFO     | run                  | Configuration:
+2026-08-31 19:31:05 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:31:05 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:31:05 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:31:05 | INFO     | run                  |    - Excluded symbols: {'XS', 'XT', 'XR', 'XD'}
+2026-08-31 19:31:05 | INFO     | run                  | ======================================================================
+2026-08-31 19:31:05 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:31:05 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:31:08 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:31:10 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:31:10 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:31:10 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:31:10 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:31:10 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:31:10 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:31:10 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:31:10 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:31:10 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:31:10 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:31:10 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:31:10 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:31:10 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:31:10 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:31:10 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:31:10 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:31:10 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:31:10 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:31:10 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:31:10 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_193110.xlsx
+2026-08-31 19:31:10 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_190541.xlsx
+2026-08-31 19:31:10 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:31:10 | DEBUG    | save_data            | Loaded 3018 existing rows
+2026-08-31 19:31:10 | DEBUG    | save_data            | Combined to 3521 rows
+2026-08-31 19:31:10 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:31:11 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpwcu3po50.xlsx
+2026-08-31 19:31:11 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:31:11 | INFO     | save_data            | ✅ Data saved successfully (3521 total rows, 271,519 bytes)
+2026-08-31 19:31:11 | INFO     | run                  | ======================================================================
+2026-08-31 19:31:11 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:31:11 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:31:11 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:31:11 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:31:11 | INFO     | run                  |    - Timestamp: 2026-09-01 00:31:05
+2026-08-31 19:31:11 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:31:11 | INFO     | run                  | ======================================================================
+2026-08-31 19:31:11 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:31:11 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 31, 'DATETIME': '2026-09-01 00:31'}
+2026-08-31 19:31:11 | DEBUG    | close                | Session closed
+2026-08-31 19:36:11 | INFO     | run                  | ======================================================================
+2026-08-31 19:36:11 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:36:11 | INFO     | run                  | ======================================================================
+2026-08-31 19:36:11 | INFO     | run                  | Execution Time: 2026-09-01 00:36:11 PKT
+2026-08-31 19:36:11 | INFO     | run                  | Configuration:
+2026-08-31 19:36:11 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:36:11 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:36:11 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:36:11 | INFO     | run                  |    - Excluded symbols: {'XD', 'XS', 'XT', 'XR'}
+2026-08-31 19:36:11 | INFO     | run                  | ======================================================================
+2026-08-31 19:36:11 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:36:11 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:36:14 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:36:16 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:36:16 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:36:16 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:36:16 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:36:16 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:36:16 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:36:16 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:36:16 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:36:16 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:36:16 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:36:16 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:36:16 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:36:16 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:36:16 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:36:16 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:36:16 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:36:16 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:36:16 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:36:16 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:36:16 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_193616.xlsx
+2026-08-31 19:36:16 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_191046.xlsx
+2026-08-31 19:36:16 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:36:16 | DEBUG    | save_data            | Loaded 3521 existing rows
+2026-08-31 19:36:16 | DEBUG    | save_data            | Combined to 4024 rows
+2026-08-31 19:36:16 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:36:17 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpvlpy6dd1.xlsx
+2026-08-31 19:36:17 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:36:17 | INFO     | save_data            | ✅ Data saved successfully (4024 total rows, 309,618 bytes)
+2026-08-31 19:36:17 | INFO     | run                  | ======================================================================
+2026-08-31 19:36:17 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:36:17 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:36:17 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:36:17 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:36:17 | INFO     | run                  |    - Timestamp: 2026-09-01 00:36:11
+2026-08-31 19:36:17 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:36:17 | INFO     | run                  | ======================================================================
+2026-08-31 19:36:17 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:36:17 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 36, 'DATETIME': '2026-09-01 00:36'}
+2026-08-31 19:36:17 | DEBUG    | close                | Session closed
+2026-08-31 19:41:17 | INFO     | run                  | ======================================================================
+2026-08-31 19:41:17 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:41:17 | INFO     | run                  | ======================================================================
+2026-08-31 19:41:17 | INFO     | run                  | Execution Time: 2026-09-01 00:41:17 PKT
+2026-08-31 19:41:17 | INFO     | run                  | Configuration:
+2026-08-31 19:41:17 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:41:17 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:41:17 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:41:17 | INFO     | run                  |    - Excluded symbols: {'XS', 'XR', 'XD', 'XT'}
+2026-08-31 19:41:17 | INFO     | run                  | ======================================================================
+2026-08-31 19:41:17 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:41:17 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:41:20 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:41:23 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:41:23 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:41:23 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:41:23 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:41:23 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:41:23 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:41:23 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:41:23 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:41:23 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:41:23 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:41:23 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:41:23 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:41:23 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:41:23 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:41:23 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:41:23 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:41:23 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:41:23 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:41:23 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:41:23 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_194123.xlsx
+2026-08-31 19:41:23 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_191552.xlsx
+2026-08-31 19:41:23 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:41:23 | DEBUG    | save_data            | Loaded 4024 existing rows
+2026-08-31 19:41:23 | DEBUG    | save_data            | Combined to 4527 rows
+2026-08-31 19:41:23 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:41:24 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmp990djn4k.xlsx
+2026-08-31 19:41:24 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:41:24 | INFO     | save_data            | ✅ Data saved successfully (4527 total rows, 347,740 bytes)
+2026-08-31 19:41:24 | INFO     | run                  | ======================================================================
+2026-08-31 19:41:24 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:41:24 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:41:24 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:41:24 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:41:24 | INFO     | run                  |    - Timestamp: 2026-09-01 00:41:17
+2026-08-31 19:41:24 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:41:24 | INFO     | run                  | ======================================================================
+2026-08-31 19:41:24 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:41:24 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 41, 'DATETIME': '2026-09-01 00:41'}
+2026-08-31 19:41:24 | DEBUG    | close                | Session closed
+2026-08-31 19:46:24 | INFO     | run                  | ======================================================================
+2026-08-31 19:46:24 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:46:24 | INFO     | run                  | ======================================================================
+2026-08-31 19:46:24 | INFO     | run                  | Execution Time: 2026-09-01 00:46:24 PKT
+2026-08-31 19:46:24 | INFO     | run                  | Configuration:
+2026-08-31 19:46:24 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:46:24 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:46:24 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:46:24 | INFO     | run                  |    - Excluded symbols: {'XD', 'XR', 'XT', 'XS'}
+2026-08-31 19:46:24 | INFO     | run                  | ======================================================================
+2026-08-31 19:46:24 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:46:24 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:46:28 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:46:29 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:46:29 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:46:29 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:46:29 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:46:29 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:46:29 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:46:29 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:46:29 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:46:29 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:46:29 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:46:29 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:46:29 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:46:29 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:46:29 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:46:29 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:46:29 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:46:29 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:46:29 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:46:29 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:46:29 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_194629.xlsx
+2026-08-31 19:46:29 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_192057.xlsx
+2026-08-31 19:46:29 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:46:30 | DEBUG    | save_data            | Loaded 4527 existing rows
+2026-08-31 19:46:30 | DEBUG    | save_data            | Combined to 5030 rows
+2026-08-31 19:46:30 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:46:30 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpv4cmpcum.xlsx
+2026-08-31 19:46:30 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:46:30 | INFO     | save_data            | ✅ Data saved successfully (5030 total rows, 385,822 bytes)
+2026-08-31 19:46:30 | INFO     | run                  | ======================================================================
+2026-08-31 19:46:30 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:46:30 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:46:30 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:46:30 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:46:30 | INFO     | run                  |    - Timestamp: 2026-09-01 00:46:24
+2026-08-31 19:46:30 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:46:30 | INFO     | run                  | ======================================================================
+2026-08-31 19:46:30 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:46:30 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 46, 'DATETIME': '2026-09-01 00:46'}
+2026-08-31 19:46:30 | DEBUG    | close                | Session closed
+2026-08-31 19:51:31 | INFO     | run                  | ======================================================================
+2026-08-31 19:51:31 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:51:31 | INFO     | run                  | ======================================================================
+2026-08-31 19:51:31 | INFO     | run                  | Execution Time: 2026-09-01 00:51:31 PKT
+2026-08-31 19:51:31 | INFO     | run                  | Configuration:
+2026-08-31 19:51:31 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:51:31 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:51:31 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:51:31 | INFO     | run                  |    - Excluded symbols: {'XS', 'XD', 'XR', 'XT'}
+2026-08-31 19:51:31 | INFO     | run                  | ======================================================================
+2026-08-31 19:51:31 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:51:31 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:51:34 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:51:36 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:51:36 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:51:36 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:51:36 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:51:36 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:51:36 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:51:36 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:51:36 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:51:36 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:51:36 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:51:36 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:51:36 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:51:36 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:51:36 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:51:36 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:51:36 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:51:36 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:51:36 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:51:36 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:51:36 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_195136.xlsx
+2026-08-31 19:51:36 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_192604.xlsx
+2026-08-31 19:51:36 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:51:36 | DEBUG    | save_data            | Loaded 5030 existing rows
+2026-08-31 19:51:36 | DEBUG    | save_data            | Combined to 5533 rows
+2026-08-31 19:51:36 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:51:37 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpsryt41k7.xlsx
+2026-08-31 19:51:37 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:51:37 | INFO     | save_data            | ✅ Data saved successfully (5533 total rows, 423,909 bytes)
+2026-08-31 19:51:37 | INFO     | run                  | ======================================================================
+2026-08-31 19:51:37 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:51:37 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:51:37 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:51:37 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:51:37 | INFO     | run                  |    - Timestamp: 2026-09-01 00:51:31
+2026-08-31 19:51:37 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:51:37 | INFO     | run                  | ======================================================================
+2026-08-31 19:51:37 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:51:37 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 51, 'DATETIME': '2026-09-01 00:51'}
+2026-08-31 19:51:37 | DEBUG    | close                | Session closed
+2026-08-31 19:56:38 | INFO     | run                  | ======================================================================
+2026-08-31 19:56:38 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 19:56:38 | INFO     | run                  | ======================================================================
+2026-08-31 19:56:38 | INFO     | run                  | Execution Time: 2026-09-01 00:56:38 PKT
+2026-08-31 19:56:38 | INFO     | run                  | Configuration:
+2026-08-31 19:56:38 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 19:56:38 | INFO     | run                  |    - Data directory: data
+2026-08-31 19:56:38 | INFO     | run                  |    - Log directory: logs
+2026-08-31 19:56:38 | INFO     | run                  |    - Excluded symbols: {'XT', 'XR', 'XD', 'XS'}
+2026-08-31 19:56:38 | INFO     | run                  | ======================================================================
+2026-08-31 19:56:38 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 19:56:38 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 19:56:41 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 19:56:42 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 19:56:42 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 19:56:42 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 19:56:42 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 19:56:42 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 19:56:42 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 19:56:42 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 19:56:42 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 19:56:42 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 19:56:42 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 19:56:42 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:56:42 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 19:56:42 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 19:56:42 | INFO     | clean_data           | Cleaning data...
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 19:56:42 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 19:56:42 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 19:56:42 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 19:56:42 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:56:42 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:56:42 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_195642.xlsx
+2026-08-31 19:56:42 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_193110.xlsx
+2026-08-31 19:56:42 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 19:56:42 | DEBUG    | save_data            | Loaded 5533 existing rows
+2026-08-31 19:56:42 | DEBUG    | save_data            | Combined to 6036 rows
+2026-08-31 19:56:42 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 19:56:43 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpy6ots4t7.xlsx
+2026-08-31 19:56:43 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 19:56:43 | INFO     | save_data            | ✅ Data saved successfully (6036 total rows, 461,996 bytes)
+2026-08-31 19:56:43 | INFO     | run                  | ======================================================================
+2026-08-31 19:56:43 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 19:56:43 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 19:56:43 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 19:56:43 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 19:56:43 | INFO     | run                  |    - Timestamp: 2026-09-01 00:56:38
+2026-08-31 19:56:43 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 19:56:43 | INFO     | run                  | ======================================================================
+2026-08-31 19:56:43 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 19:56:43 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 0, 'MINUTE': 56, 'DATETIME': '2026-09-01 00:56'}
+2026-08-31 19:56:43 | DEBUG    | close                | Session closed
+2026-08-31 20:01:44 | INFO     | run                  | ======================================================================
+2026-08-31 20:01:44 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:01:44 | INFO     | run                  | ======================================================================
+2026-08-31 20:01:44 | INFO     | run                  | Execution Time: 2026-09-01 01:01:44 PKT
+2026-08-31 20:01:44 | INFO     | run                  | Configuration:
+2026-08-31 20:01:44 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:01:44 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:01:44 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:01:44 | INFO     | run                  |    - Excluded symbols: {'XD', 'XT', 'XR', 'XS'}
+2026-08-31 20:01:44 | INFO     | run                  | ======================================================================
+2026-08-31 20:01:44 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:01:44 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:01:48 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:01:49 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:01:49 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:01:49 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:01:49 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:01:49 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:01:49 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:01:49 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:01:49 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:01:49 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:01:49 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:01:49 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:01:49 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:01:49 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:01:49 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:01:49 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:01:49 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:01:49 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:01:49 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:01:49 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:01:49 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_200149.xlsx
+2026-08-31 20:01:49 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_193616.xlsx
+2026-08-31 20:01:49 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:01:50 | DEBUG    | save_data            | Loaded 6036 existing rows
+2026-08-31 20:01:50 | DEBUG    | save_data            | Combined to 6539 rows
+2026-08-31 20:01:50 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:01:51 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpsgbe6dhx.xlsx
+2026-08-31 20:01:51 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:01:51 | INFO     | save_data            | ✅ Data saved successfully (6539 total rows, 499,398 bytes)
+2026-08-31 20:01:51 | INFO     | run                  | ======================================================================
+2026-08-31 20:01:51 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:01:51 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:01:51 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:01:51 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:01:51 | INFO     | run                  |    - Timestamp: 2026-09-01 01:01:44
+2026-08-31 20:01:51 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:01:51 | INFO     | run                  | ======================================================================
+2026-08-31 20:01:51 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:01:51 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 1, 'DATETIME': '2026-09-01 01:01'}
+2026-08-31 20:01:51 | DEBUG    | close                | Session closed
+2026-08-31 20:06:51 | INFO     | run                  | ======================================================================
+2026-08-31 20:06:51 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:06:51 | INFO     | run                  | ======================================================================
+2026-08-31 20:06:51 | INFO     | run                  | Execution Time: 2026-09-01 01:06:51 PKT
+2026-08-31 20:06:51 | INFO     | run                  | Configuration:
+2026-08-31 20:06:51 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:06:51 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:06:51 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:06:51 | INFO     | run                  |    - Excluded symbols: {'XD', 'XS', 'XR', 'XT'}
+2026-08-31 20:06:51 | INFO     | run                  | ======================================================================
+2026-08-31 20:06:51 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:06:51 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:06:55 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:06:57 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:06:57 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:06:57 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:06:57 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:06:57 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:06:57 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:06:57 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:06:57 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:06:57 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:06:57 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:06:57 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:06:57 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:06:57 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:06:57 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:06:57 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:06:57 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:06:57 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:06:57 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:06:57 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:06:57 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_200657.xlsx
+2026-08-31 20:06:57 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_194123.xlsx
+2026-08-31 20:06:57 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:06:57 | DEBUG    | save_data            | Loaded 6539 existing rows
+2026-08-31 20:06:57 | DEBUG    | save_data            | Combined to 7042 rows
+2026-08-31 20:06:57 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:06:59 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpl_0o7w7j.xlsx
+2026-08-31 20:06:59 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:06:59 | INFO     | save_data            | ✅ Data saved successfully (7042 total rows, 536,971 bytes)
+2026-08-31 20:06:59 | INFO     | run                  | ======================================================================
+2026-08-31 20:06:59 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:06:59 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:06:59 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:06:59 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:06:59 | INFO     | run                  |    - Timestamp: 2026-09-01 01:06:51
+2026-08-31 20:06:59 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:06:59 | INFO     | run                  | ======================================================================
+2026-08-31 20:06:59 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:06:59 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 6, 'DATETIME': '2026-09-01 01:06'}
+2026-08-31 20:06:59 | DEBUG    | close                | Session closed
+2026-08-31 20:11:59 | INFO     | run                  | ======================================================================
+2026-08-31 20:11:59 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:11:59 | INFO     | run                  | ======================================================================
+2026-08-31 20:11:59 | INFO     | run                  | Execution Time: 2026-09-01 01:11:59 PKT
+2026-08-31 20:11:59 | INFO     | run                  | Configuration:
+2026-08-31 20:11:59 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:11:59 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:11:59 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:11:59 | INFO     | run                  |    - Excluded symbols: {'XD', 'XR', 'XS', 'XT'}
+2026-08-31 20:11:59 | INFO     | run                  | ======================================================================
+2026-08-31 20:11:59 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:11:59 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:12:03 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:12:05 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:12:05 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:12:05 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:12:05 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:12:05 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:12:05 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:12:05 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:12:05 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:12:05 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:12:05 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:12:05 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:12:05 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:12:05 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:12:05 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:12:05 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:12:05 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:12:05 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:12:05 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:12:05 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:12:05 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_201205.xlsx
+2026-08-31 20:12:05 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_194629.xlsx
+2026-08-31 20:12:05 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:12:05 | DEBUG    | save_data            | Loaded 7042 existing rows
+2026-08-31 20:12:05 | DEBUG    | save_data            | Combined to 7545 rows
+2026-08-31 20:12:05 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:12:07 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpun0pi4ko.xlsx
+2026-08-31 20:12:07 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:12:07 | INFO     | save_data            | ✅ Data saved successfully (7545 total rows, 574,478 bytes)
+2026-08-31 20:12:07 | INFO     | run                  | ======================================================================
+2026-08-31 20:12:07 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:12:07 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:12:07 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:12:07 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:12:07 | INFO     | run                  |    - Timestamp: 2026-09-01 01:11:59
+2026-08-31 20:12:07 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:12:07 | INFO     | run                  | ======================================================================
+2026-08-31 20:12:07 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:12:07 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 11, 'DATETIME': '2026-09-01 01:11'}
+2026-08-31 20:12:07 | DEBUG    | close                | Session closed
+2026-08-31 20:17:07 | INFO     | run                  | ======================================================================
+2026-08-31 20:17:07 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:17:07 | INFO     | run                  | ======================================================================
+2026-08-31 20:17:07 | INFO     | run                  | Execution Time: 2026-09-01 01:17:07 PKT
+2026-08-31 20:17:07 | INFO     | run                  | Configuration:
+2026-08-31 20:17:07 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:17:07 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:17:07 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:17:07 | INFO     | run                  |    - Excluded symbols: {'XT', 'XS', 'XR', 'XD'}
+2026-08-31 20:17:07 | INFO     | run                  | ======================================================================
+2026-08-31 20:17:07 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:17:07 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:17:11 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:17:13 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:17:13 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:17:13 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:17:13 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:17:13 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:17:13 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:17:13 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:17:13 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:17:13 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:17:13 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:17:13 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:17:13 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:17:13 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:17:13 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:17:13 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:17:13 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:17:13 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:17:13 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:17:13 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:17:13 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_201713.xlsx
+2026-08-31 20:17:13 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_195136.xlsx
+2026-08-31 20:17:13 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:17:13 | DEBUG    | save_data            | Loaded 7545 existing rows
+2026-08-31 20:17:13 | DEBUG    | save_data            | Combined to 8048 rows
+2026-08-31 20:17:13 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:17:15 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpl7u7sods.xlsx
+2026-08-31 20:17:15 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:17:15 | INFO     | save_data            | ✅ Data saved successfully (8048 total rows, 611,977 bytes)
+2026-08-31 20:17:15 | INFO     | run                  | ======================================================================
+2026-08-31 20:17:15 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:17:15 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:17:15 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:17:15 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:17:15 | INFO     | run                  |    - Timestamp: 2026-09-01 01:17:07
+2026-08-31 20:17:15 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:17:15 | INFO     | run                  | ======================================================================
+2026-08-31 20:17:15 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:17:15 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 17, 'DATETIME': '2026-09-01 01:17'}
+2026-08-31 20:17:15 | DEBUG    | close                | Session closed
+2026-08-31 20:22:15 | INFO     | run                  | ======================================================================
+2026-08-31 20:22:15 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:22:15 | INFO     | run                  | ======================================================================
+2026-08-31 20:22:15 | INFO     | run                  | Execution Time: 2026-09-01 01:22:15 PKT
+2026-08-31 20:22:15 | INFO     | run                  | Configuration:
+2026-08-31 20:22:15 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:22:15 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:22:15 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:22:15 | INFO     | run                  |    - Excluded symbols: {'XD', 'XT', 'XS', 'XR'}
+2026-08-31 20:22:15 | INFO     | run                  | ======================================================================
+2026-08-31 20:22:15 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:22:15 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:22:19 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:22:21 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:22:21 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:22:21 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:22:21 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:22:21 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:22:21 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:22:21 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:22:21 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:22:21 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:22:21 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:22:21 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:22:21 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:22:21 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:22:21 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:22:21 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:22:21 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:22:21 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:22:21 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:22:21 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:22:21 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_202221.xlsx
+2026-08-31 20:22:21 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_195642.xlsx
+2026-08-31 20:22:21 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:22:22 | DEBUG    | save_data            | Loaded 8048 existing rows
+2026-08-31 20:22:22 | DEBUG    | save_data            | Combined to 8551 rows
+2026-08-31 20:22:22 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:22:23 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpt9ze2hb4.xlsx
+2026-08-31 20:22:23 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:22:23 | INFO     | save_data            | ✅ Data saved successfully (8551 total rows, 649,638 bytes)
+2026-08-31 20:22:23 | INFO     | run                  | ======================================================================
+2026-08-31 20:22:23 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:22:23 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:22:23 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:22:23 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:22:23 | INFO     | run                  |    - Timestamp: 2026-09-01 01:22:15
+2026-08-31 20:22:23 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:22:23 | INFO     | run                  | ======================================================================
+2026-08-31 20:22:23 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:22:23 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 22, 'DATETIME': '2026-09-01 01:22'}
+2026-08-31 20:22:23 | DEBUG    | close                | Session closed
+2026-08-31 20:27:24 | INFO     | run                  | ======================================================================
+2026-08-31 20:27:24 | INFO     | run                  | 🚀 MARKET DATA SCRAPER - SINGLE EXECUTION
+2026-08-31 20:27:24 | INFO     | run                  | ======================================================================
+2026-08-31 20:27:24 | INFO     | run                  | Execution Time: 2026-09-01 01:27:24 PKT
+2026-08-31 20:27:24 | INFO     | run                  | Configuration:
+2026-08-31 20:27:24 | INFO     | run                  |    - Timezone: Asia/Karachi
+2026-08-31 20:27:24 | INFO     | run                  |    - Data directory: data
+2026-08-31 20:27:24 | INFO     | run                  |    - Log directory: logs
+2026-08-31 20:27:24 | INFO     | run                  |    - Excluded symbols: {'XD', 'XS', 'XR', 'XT'}
+2026-08-31 20:27:24 | INFO     | run                  | ======================================================================
+2026-08-31 20:27:24 | INFO     | fetch_data           | Fetching data (Attempt 1/3)...
+2026-08-31 20:27:24 | DEBUG    | fetch_data           | Establishing session with https://dps.psx.com.pk/
+2026-08-31 20:27:27 | DEBUG    | fetch_data           | Requesting data from https://dps.psx.com.pk/market-watch
+2026-08-31 20:27:29 | DEBUG    | fetch_data           | Response status: 200
+2026-08-31 20:27:29 | DEBUG    | fetch_data           | Response content type: text/html; charset=utf-8
+2026-08-31 20:27:29 | DEBUG    | fetch_data           | Response size: 483236 bytes
+2026-08-31 20:27:29 | INFO     | fetch_data           | ✅ Data fetched successfully (Status: 200)
+2026-08-31 20:27:29 | DEBUG    | parse_json           | Attempting JSON parsing...
+2026-08-31 20:27:29 | DEBUG    | parse_json           | Response preview: <table class="tbl" data-page-length="25"><thead class="tbl__head"><!-- tr--><!--   th(colspan="11")--><!--   th.center(colspan="2", style="width: 110px;") TOTAL BUY ORDERS--><!--   th.center(colspan="2", style="width: 110px;") TOTAL SELL ORDERS--><tr><th data-name="symbol">SYMBOL</th><th data-name="sector">SECTOR</th><th data-name="listed">LISTED IN</th><th class="right" data-name="ldcp">LDCP</th><th class="right" data-name="open">OPEN</th><th class="right" data-name="high">HIGH</th><th class="r
+2026-08-31 20:27:29 | WARNING  | parse_json           | ⚠️ JSON parsing failed: Expecting value: line 1 column 1 (char 0)
+2026-08-31 20:27:29 | INFO     | run                  | JSON parsing failed, trying HTML fallback...
+2026-08-31 20:27:29 | INFO     | parse_html           | Attempting HTML fallback parsing...
+2026-08-31 20:27:29 | DEBUG    | parse_html           | Found 1 table(s) in HTML
+2026-08-31 20:27:29 | DEBUG    | parse_html           | Table columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:27:29 | DEBUG    | parse_html           | Table shape: (503, 11)
+2026-08-31 20:27:29 | INFO     | parse_html           | ✅ HTML parsed successfully (503 rows)
+2026-08-31 20:27:29 | INFO     | clean_data           | Cleaning data...
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Initial shape: (503, 11)
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Initial columns: ['SYMBOL', 'SECTOR', 'LISTED IN', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME']
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Removed 'LISTED IN' column
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted LDCP from float64 to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted OPEN from float64 to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted HIGH from float64 to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted LOW from float64 to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted CURRENT from float64 to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted CHANGE from float64 to numeric
+2026-08-31 20:27:29 | WARNING  | clean_data           | Column CHANGE (%): 503 values could not be converted to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted CHANGE (%) from str to numeric
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Converted VOLUME from int64 to numeric
+2026-08-31 20:27:29 | INFO     | clean_data           | ✅ Data cleaned (503 rows, 16 columns)
+2026-08-31 20:27:29 | DEBUG    | clean_data           | Final columns: ['SYMBOL', 'SECTOR', 'LDCP', 'OPEN', 'HIGH', 'LOW', 'CURRENT', 'CHANGE', 'CHANGE (%)', 'VOLUME', 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'DATETIME']
+2026-08-31 20:27:29 | DEBUG    | get_file_path        | Generated file path: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:27:29 | INFO     | save_data            | Saving data to: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:27:29 | DEBUG    | _create_backup       | Backup created: data/2026/09/backups/2026-09-01_backup_20260831_202729.xlsx
+2026-08-31 20:27:29 | DEBUG    | _cleanup_old_backups | Removed old backup: 2026-09-01_backup_20260831_200149.xlsx
+2026-08-31 20:27:29 | DEBUG    | save_data            | Existing file found, merging data...
+2026-08-31 20:27:30 | DEBUG    | save_data            | Loaded 8551 existing rows
+2026-08-31 20:27:30 | DEBUG    | save_data            | Combined to 9054 rows
+2026-08-31 20:27:30 | DEBUG    | save_data            | Writing to temporary file...
+2026-08-31 20:27:32 | DEBUG    | save_data            | Data written to temp file: /home/runner/work/Thalorae-BackLioraen/Thalorae-BackLioraen/data/2026/09/tmpitkskcqi.xlsx
+2026-08-31 20:27:32 | DEBUG    | save_data            | Temp file moved to final location
+2026-08-31 20:27:32 | INFO     | save_data            | ✅ Data saved successfully (9054 total rows, 687,312 bytes)
+2026-08-31 20:27:32 | INFO     | run                  | ======================================================================
+2026-08-31 20:27:32 | INFO     | run                  | 📊 EXECUTION SUMMARY:
+2026-08-31 20:27:32 | INFO     | run                  |    ✅ Status: SUCCESS
+2026-08-31 20:27:32 | INFO     | run                  |    - Rows processed: 503
+2026-08-31 20:27:32 | INFO     | run                  |    - Unique symbols: 503
+2026-08-31 20:27:32 | INFO     | run                  |    - Timestamp: 2026-09-01 01:27:24
+2026-08-31 20:27:32 | INFO     | run                  |    - File: data/2026/09/2026-09-01.xlsx
+2026-08-31 20:27:32 | INFO     | run                  | ======================================================================
+2026-08-31 20:27:32 | DEBUG    | run                  | Sample data (first row):
+2026-08-31 20:27:32 | DEBUG    | run                  | {'SYMBOL': 'CNERGY', 'SECTOR': 825, 'LDCP': 14.41, 'OPEN': 14.5, 'HIGH': 15.58, 'LOW': 14.2, 'CURRENT': 15.46, 'CHANGE': 1.05, 'CHANGE (%)': nan, 'VOLUME': 293180534, 'YEAR': 2026, 'MONTH': 9, 'DAY': 1, 'HOUR': 1, 'MINUTE': 27, 'DATETIME': '2026-09-01 01:27'}
+2026-08-31 20:27:32 | DEBUG    | close                | Session closed
